@@ -18,10 +18,11 @@ function TaskChart({ todos }) {
   if (todos.length === 0) return null;
 
   return (
-    <div className="mt-8 bg-white/50 rounded-3xl border border-slate-100 p-6 flex flex-col sm:flex-row gap-8 items-center justify-between shadow-sm">
+    // Changed to flex-col to stack vertically inside the new right-hand column
+    <div className="bg-white/50 rounded-3xl border border-slate-100 p-6 flex flex-col gap-10 items-center justify-center shadow-sm h-full">
       
       {/* Pie Chart Section */}
-      <div className="w-full h-64 sm:w-1/2">
+      <div className="w-full h-56 sm:h-64">
         <h3 className="text-center font-bold text-slate-700 mb-2">Task Distribution</h3>
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
@@ -45,7 +46,7 @@ function TaskChart({ todos }) {
       </div>
 
       {/* Bar Chart Section */}
-      <div className="w-full h-64 sm:w-1/2">
+      <div className="w-full h-56 sm:h-64">
         <h3 className="text-center font-bold text-slate-700 mb-2">Task Counts</h3>
         <ResponsiveContainer width="100%" height="100%">
           <BarChart data={data} margin={{ top: 20, right: 30, left: 0, bottom: 5 }}>

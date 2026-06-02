@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import TaskChart from './TaskChart'; // <-- Import the new chart component
+import TaskChart from './TaskChart'; 
 
 function App() {
   const [todos, setTodos] = useState([]);
@@ -55,7 +55,8 @@ function App() {
       <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-blue-400/20 rounded-full mix-blend-multiply filter blur-[100px] opacity-70"></div>
       <div className="absolute top-[10%] right-[-10%] w-[500px] h-[500px] bg-violet-400/20 rounded-full mix-blend-multiply filter blur-[100px] opacity-70"></div>
 
-      <div className="w-full max-w-2xl bg-white/70 backdrop-blur-3xl rounded-[2.5rem] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.08)] border border-white relative z-10 p-8 sm:p-12">
+      {/* Increased max-width from max-w-2xl to max-w-6xl for side-by-side layout */}
+      <div className="w-full max-w-6xl bg-white/70 backdrop-blur-3xl rounded-[2.5rem] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.08)] border border-white relative z-10 p-8 sm:p-12">
         
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-10 gap-4">
@@ -96,71 +97,77 @@ function App() {
           </button>
         </form>
 
-        {/* Task List */}
-        <div className="bg-white/50 rounded-3xl border border-slate-100 p-2">
-          {todos.length === 0 ? (
-            <div className="flex flex-col items-center justify-center py-16 text-center">
-              <div className="w-20 h-20 bg-blue-50 rounded-full flex items-center justify-center mb-6">
-                <svg className="w-10 h-10 text-blue-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M5 13l4 4L19 7" />
-                </svg>
+        {/* --- 2-COLUMN GRID LAYOUT --- */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+          
+          {/* Left Column: Task List */}
+          <div className="bg-white/50 rounded-3xl border border-slate-100 p-2 h-full">
+            {todos.length === 0 ? (
+              <div className="flex flex-col items-center justify-center py-16 text-center">
+                <div className="w-20 h-20 bg-blue-50 rounded-full flex items-center justify-center mb-6">
+                  <svg className="w-10 h-10 text-blue-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="1.5" d="M5 13l4 4L19 7" />
+                  </svg>
+                </div>
+                <p className="text-slate-800 font-bold text-xl mb-2">All Done!</p>
+                <p className="text-slate-500 font-medium">Take a break or start a new objective.</p>
               </div>
-              <p className="text-slate-800 font-bold text-xl mb-2">All Done!</p>
-              <p className="text-slate-500 font-medium">Take a break or start a new objective.</p>
-            </div>
-          ) : (
-            <ul className="space-y-1">
-              {todos.map(todo => (
-                <li 
-                  key={todo.id} 
-                  className={`group flex items-center justify-between p-4 sm:p-5 rounded-2xl transition-all duration-300 ${
-                    todo.completed 
-                      ? 'bg-transparent opacity-60' 
-                      : 'bg-white hover:bg-slate-50 hover:shadow-sm'
-                  }`}
-                >
-                  <div className="flex items-center gap-5 cursor-pointer flex-1" onClick={() => handleToggle(todo.id)}>
-                    
-                    {/* Checkbox */}
-                    <div className={`relative flex items-center justify-center w-8 h-8 rounded-full border-2 transition-all duration-300 shrink-0 ${
+            ) : (
+              <ul className="space-y-1">
+                {todos.map(todo => (
+                  <li 
+                    key={todo.id} 
+                    className={`group flex items-center justify-between p-4 sm:p-5 rounded-2xl transition-all duration-300 ${
                       todo.completed 
-                        ? 'bg-emerald-500 border-emerald-500' 
-                        : 'border-slate-300 group-hover:border-blue-400'
-                    }`}>
-                      <svg 
-                        className={`w-4 h-4 text-white absolute transition-transform duration-300 ${todo.completed ? 'scale-100' : 'scale-0'}`} 
-                        fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3"
-                      >
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                      </svg>
-                    </div>
-                    
-                    <span className={`text-[1.15rem] font-medium transition-all duration-300 ${
-                      todo.completed ? 'line-through text-slate-400' : 'text-slate-700 group-hover:text-slate-900'
-                    }`}>
-                      {todo.text}
-                    </span>
-                  </div>
-
-                  {/* Delete Icon */}
-                  <button 
-                    onClick={() => handleDelete(todo.id)}
-                    className="p-3 text-slate-300 hover:text-rose-500 hover:bg-rose-50 rounded-xl opacity-0 group-hover:opacity-100 transition-all duration-300 ml-4 focus:opacity-100"
-                    aria-label="Delete task"
+                        ? 'bg-transparent opacity-60' 
+                        : 'bg-white hover:bg-slate-50 hover:shadow-sm'
+                    }`}
                   >
-                    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                      <path strokeLinecap="round" strokeLinejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                    </svg>
-                  </button>
-                </li>
-              ))}
-            </ul>
-          )}
-        </div>
+                    <div className="flex items-center gap-5 cursor-pointer flex-1" onClick={() => handleToggle(todo.id)}>
+                      
+                      {/* Checkbox */}
+                      <div className={`relative flex items-center justify-center w-8 h-8 rounded-full border-2 transition-all duration-300 shrink-0 ${
+                        todo.completed 
+                          ? 'bg-emerald-500 border-emerald-500' 
+                          : 'border-slate-300 group-hover:border-blue-400'
+                      }`}>
+                        <svg 
+                          className={`w-4 h-4 text-white absolute transition-transform duration-300 ${todo.completed ? 'scale-100' : 'scale-0'}`} 
+                          fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3"
+                        >
+                          <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                        </svg>
+                      </div>
+                      
+                      <span className={`text-[1.15rem] font-medium transition-all duration-300 ${
+                        todo.completed ? 'line-through text-slate-400' : 'text-slate-700 group-hover:text-slate-900'
+                      }`}>
+                        {todo.text}
+                      </span>
+                    </div>
 
-        {/* --- ADDED GRAPHS HERE --- */}
-        <TaskChart todos={todos} />
-        
+                    {/* Delete Icon */}
+                    <button 
+                      onClick={() => handleDelete(todo.id)}
+                      className="p-3 text-slate-300 hover:text-rose-500 hover:bg-rose-50 rounded-xl opacity-0 group-hover:opacity-100 transition-all duration-300 ml-4 focus:opacity-100"
+                      aria-label="Delete task"
+                    >
+                      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                      </svg>
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+
+          {/* Right Column: Graphs */}
+          <div className="h-full">
+            <TaskChart todos={todos} />
+          </div>
+          
+        </div>
       </div>
     </div>
   );
