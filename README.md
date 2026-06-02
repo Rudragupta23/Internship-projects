@@ -40,7 +40,7 @@ To run the TODO app on your local machine, follow these instructions:
 ### Prerequisites
 Make sure you have [Git](https://git-scm.com/) and [Node.js](https://nodejs.org/) installed on your computer.
 
-### Installation & Setup
+## Installation & Setup
 
 ### 1. Clone the repository
 git clone https://github.com/Rudragupta23/Internship-projects.git
