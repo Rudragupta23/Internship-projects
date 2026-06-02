@@ -42,20 +42,20 @@ Make sure you have [Git](https://git-scm.com/) and [Node.js](https://nodejs.org/
 
 ### Installation & Setup
 
-# 1. Clone the repository
+### 1. Clone the repository
 git clone https://github.com/Rudragupta23/Internship-projects.git
 
-# 2. Navigate to the project directory
+### 2. Navigate to the project directory
 cd Internship-projects/todo-app
 
-# 3. Start the Backend Server
-# Open your terminal and run:
+### 3. Start the Backend Server
+Open your terminal and run:
 cd backend
 npm install
 npm start
 
-# 4. Start the Frontend Application
-# Open a new, separate terminal window and run:
+### 4. Start the Frontend Application
+Open a new, separate terminal window and run:
 cd frontend
 npm install
 npm run dev
