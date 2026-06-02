@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import TaskChart from './TaskChart'; // <-- Import the new chart component
 
 function App() {
   const [todos, setTodos] = useState([]);
@@ -49,7 +50,7 @@ function App() {
   const pendingCount = todos.filter(t => !t.completed).length;
 
   return (
-    <div className="min-h-screen bg-[#f8fafc] flex items-start justify-center pt-16 sm:pt-24 px-4 font-sans relative overflow-hidden text-slate-800">
+    <div className="min-h-screen bg-[#f8fafc] flex items-start justify-center pt-16 sm:pt-24 px-4 pb-24 font-sans relative overflow-x-hidden text-slate-800">
       
       <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-blue-400/20 rounded-full mix-blend-multiply filter blur-[100px] opacity-70"></div>
       <div className="absolute top-[10%] right-[-10%] w-[500px] h-[500px] bg-violet-400/20 rounded-full mix-blend-multiply filter blur-[100px] opacity-70"></div>
@@ -156,6 +157,9 @@ function App() {
             </ul>
           )}
         </div>
+
+        {/* --- ADDED GRAPHS HERE --- */}
+        <TaskChart todos={todos} />
         
       </div>
     </div>
