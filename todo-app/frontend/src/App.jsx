@@ -4,6 +4,10 @@ import TaskChart from './TaskChart';
 function App() {
   const [todos, setTodos] = useState([]);
   const [task, setTask] = useState('');
+  
+  // New states for handling the edit feature
+  const [editingId, setEditingId] = useState(null);
+  const [editText, setEditText] = useState('');
 
   const today = new Date();
   const dateOptions = { weekday: 'long', month: 'short', day: 'numeric' };
@@ -47,6 +51,35 @@ function App() {
     setTodos(todos.filter(todo => todo.id !== id));
   };
 
+  // --- NEW EDIT FUNCTIONS ---
+  const startEditing = (todo) => {
+    setEditingId(todo.id);
+    setEditText(todo.text);
+  };
+
+  const cancelEdit = () => {
+    setEditingId(null);
+    setEditText('');
+  };
+
+  const saveEdit = async (id) => {
+    if (!editText.trim()) return;
+
+    // Send the updated text to the backend
+    await fetch(`http://localhost:5000/api/todos/${id}`, { 
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text: editText })
+    });
+
+    // Update frontend state
+    setTodos(todos.map(todo => 
+      todo.id === id ? { ...todo, text: editText } : todo
+    ));
+    setEditingId(null);
+    setEditText('');
+  };
+
   const pendingCount = todos.filter(t => !t.completed).length;
 
   return (
@@ -55,7 +88,6 @@ function App() {
       <div className="absolute top-[-10%] left-[-10%] w-[500px] h-[500px] bg-blue-400/20 rounded-full mix-blend-multiply filter blur-[100px] opacity-70"></div>
       <div className="absolute top-[10%] right-[-10%] w-[500px] h-[500px] bg-violet-400/20 rounded-full mix-blend-multiply filter blur-[100px] opacity-70"></div>
 
-      {/* Increased max-width from max-w-2xl to max-w-6xl for side-by-side layout */}
       <div className="w-full max-w-6xl bg-white/70 backdrop-blur-3xl rounded-[2.5rem] shadow-[0_20px_60px_-15px_rgba(0,0,0,0.08)] border border-white relative z-10 p-8 sm:p-12">
         
         {/* Header */}
@@ -123,39 +155,85 @@ function App() {
                         : 'bg-white hover:bg-slate-50 hover:shadow-sm'
                     }`}
                   >
-                    <div className="flex items-center gap-5 cursor-pointer flex-1" onClick={() => handleToggle(todo.id)}>
-                      
-                      {/* Checkbox */}
-                      <div className={`relative flex items-center justify-center w-8 h-8 rounded-full border-2 transition-all duration-300 shrink-0 ${
-                        todo.completed 
-                          ? 'bg-emerald-500 border-emerald-500' 
-                          : 'border-slate-300 group-hover:border-blue-400'
-                      }`}>
-                        <svg 
-                          className={`w-4 h-4 text-white absolute transition-transform duration-300 ${todo.completed ? 'scale-100' : 'scale-0'}`} 
-                          fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3"
+                    {/* Conditionally render the input field OR the normal task text */}
+                    {editingId === todo.id ? (
+                      <div className="flex items-center gap-3 w-full">
+                        <input
+                          type="text"
+                          value={editText}
+                          onChange={(e) => setEditText(e.target.value)}
+                          className="flex-1 px-4 py-2 bg-white border-2 border-blue-200 rounded-xl focus:outline-none focus:border-blue-500 text-slate-700"
+                          autoFocus
+                          onKeyDown={(e) => {
+                            if (e.key === 'Enter') saveEdit(todo.id);
+                            if (e.key === 'Escape') cancelEdit();
+                          }}
+                        />
+                        <button
+                          onClick={() => saveEdit(todo.id)}
+                          className="px-4 py-2 bg-emerald-500 text-white text-sm font-bold rounded-xl hover:bg-emerald-600 transition-colors"
                         >
-                          <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                        </svg>
+                          Save
+                        </button>
+                        <button
+                          onClick={cancelEdit}
+                          className="px-4 py-2 bg-slate-200 text-slate-700 text-sm font-bold rounded-xl hover:bg-slate-300 transition-colors"
+                        >
+                          Cancel
+                        </button>
                       </div>
-                      
-                      <span className={`text-[1.15rem] font-medium transition-all duration-300 ${
-                        todo.completed ? 'line-through text-slate-400' : 'text-slate-700 group-hover:text-slate-900'
-                      }`}>
-                        {todo.text}
-                      </span>
-                    </div>
+                    ) : (
+                      <>
+                        <div className="flex items-center gap-5 cursor-pointer flex-1" onClick={() => handleToggle(todo.id)}>
+                          
+                          {/* Checkbox */}
+                          <div className={`relative flex items-center justify-center w-8 h-8 rounded-full border-2 transition-all duration-300 shrink-0 ${
+                            todo.completed 
+                              ? 'bg-emerald-500 border-emerald-500' 
+                              : 'border-slate-300 group-hover:border-blue-400'
+                          }`}>
+                            <svg 
+                              className={`w-4 h-4 text-white absolute transition-transform duration-300 ${todo.completed ? 'scale-100' : 'scale-0'}`} 
+                              fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="3"
+                            >
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                            </svg>
+                          </div>
+                          
+                          <span className={`text-[1.15rem] font-medium transition-all duration-300 break-words ${
+                            todo.completed ? 'line-through text-slate-400' : 'text-slate-700 group-hover:text-slate-900'
+                          }`}>
+                            {todo.text}
+                          </span>
+                        </div>
 
-                    {/* Delete Icon */}
-                    <button 
-                      onClick={() => handleDelete(todo.id)}
-                      className="p-3 text-slate-300 hover:text-rose-500 hover:bg-rose-50 rounded-xl opacity-0 group-hover:opacity-100 transition-all duration-300 ml-4 focus:opacity-100"
-                      aria-label="Delete task"
-                    >
-                      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                      </svg>
-                    </button>
+                        {/* Action Buttons (Edit & Delete) */}
+                        <div className="flex items-center ml-2 opacity-0 group-hover:opacity-100 transition-all duration-300 focus-within:opacity-100 shrink-0">
+                          
+                          {/* Edit Button */}
+                          <button 
+                            onClick={() => startEditing(todo)}
+                            className="p-3 text-slate-300 hover:text-blue-500 hover:bg-blue-50 rounded-xl transition-all duration-300"
+                            aria-label="Edit task"
+                          >
+                            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                            </svg>
+                          </button>
+
+                          {/* Delete Button */}
+                          <button 
+                            onClick={() => handleDelete(todo.id)}
+                            className="p-3 text-slate-300 hover:text-rose-500 hover:bg-rose-50 rounded-xl transition-all duration-300"
+                            aria-label="Delete task"
+                          >
+                            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                              <path strokeLinecap="round" strokeLinejoin="round" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                            </svg>
+                          </button>
+                        </div>
+                      </>
+                    )}
                   </li>
                 ))}
               </ul>
