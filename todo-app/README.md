@@ -8,9 +8,11 @@ A modern, responsive, and full-stack task management application designed to hel
   * Read and view a dynamic list of pending and completed tasks.
   * Update tasks by toggling their completion status.
   * Delete tasks that are no longer needed.
+  
 * **Interactive Analytics Dashboard:** Real-time visual representation of your task data (Task Distribution Pie Chart & Task Counts Bar Chart) using Recharts.
 * **Responsive UI:** A beautiful, glass-morphism inspired interface styled with Tailwind CSS that works seamlessly across desktop and mobile devices.
 * **RESTful API:** A lightweight Express.js backend handling all data operations.
+* **Edit Tasks:** Click the pencil icon next to any pending task to update its text on the fly. You can save your changes by clicking "Save" or pressing `Enter`.
 
 ---
 
