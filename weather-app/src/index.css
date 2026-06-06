@@ -1,4 +1,5 @@
 /* --- PREMIUM CSS RESET & VARIABLES --- */
+
 :root {
   --bg-color: #0b0f19;
   --panel-bg: rgba(22, 30, 46, 0.6);
@@ -108,8 +109,12 @@ body {
 /* --- COMPARE PAGE (ROCK SOLID LAYOUT) --- */
 .compare-header { text-align: center; margin-bottom: 3rem; }
 .pro-compare-grid {
-  display: flex; justify-content: center; align-items: flex-start; /* Prevents shifting */
-  gap: 2rem; width: 100%; position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 4rem; /* increased spacing */
+  width: 100%;
+  position: relative;
 }
 
 .compare-column {
@@ -131,11 +136,25 @@ body {
 .c-metric span { color: var(--text-main); font-weight: 600; margin-left: auto;}
 
 .pro-vs-badge {
-  background: var(--accent); color: #000; font-weight: 900;
-  width: 50px; height: 50px; border-radius: 50%; display: flex;
-  align-items: center; justify-content: center;
-  position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
-  border: 4px solid var(--bg-color);
+  background: var(--accent);
+  color: #000;
+  font-weight: 900;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  position: absolute;
+  left: 50%;
+  top: 45%;
+  transform: translate(-50%, -50%);
+
+  border: 6px solid var(--bg-color);
+  z-index: 10;
+
+  box-shadow: 0 0 20px rgba(56, 189, 248, 0.4);
 }
 
 /* Animations */
@@ -156,4 +175,57 @@ body {
   .pro-compare-grid { flex-direction: column; align-items: center; }
   .compare-column { width: 100%; min-height: auto; }
   .pro-vs-badge { position: static; transform: none; margin: 1rem 0; }
+}
+.analysis-panel{
+  margin-top:40px;
+  padding:30px;
+}
+
+.analysis-panel h2{
+  text-align:center;
+  margin-bottom:25px;
+}
+
+.analysis-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:20px;
+}
+
+.analysis-grid div{
+  background:rgba(0,0,0,0.25);
+  padding:20px;
+  border-radius:15px;
+}
+
+.analysis-grid h3{
+  color:#38bdf8;
+  margin-bottom:10px;
+}
+
+.winner-box{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  font-size:1.3rem;
+  font-weight:700;
+  margin-bottom:30px;
+  color:#ffd700;
+}
+
+.weather-score{
+  margin:20px 0;
+  background:rgba(56,189,248,0.15);
+  padding:15px;
+  border-radius:12px;
+  text-align:center;
+  font-weight:600;
+}
+
+.weather-score span{
+  display:block;
+  margin-top:5px;
+  font-size:1.8rem;
+  color:#38bdf8;
 }
