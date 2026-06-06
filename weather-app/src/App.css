@@ -1,0 +1,152 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  background-color: #1a1a1a;
+  color: #ffffff;
+  min-height: 100vh;
+  padding: 2rem;
+}
+
+.app-container {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.header h1 {
+  font-size: 2.5rem;
+  color: #61dafb;
+  margin-bottom: 0.5rem;
+}
+
+.error-message {
+  background-color: #ff4a4a;
+  color: white;
+  padding: 1rem;
+  border-radius: 8px;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.comparison-container {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+  justify-content: center;
+}
+
+.weather-card {
+  background-color: #2d2d2d;
+  border-radius: 12px;
+  padding: 2rem;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+}
+
+.weather-card h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #a0a0a0;
+}
+
+.search-form {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.search-form input {
+  flex: 1;
+  padding: 0.75rem;
+  border: none;
+  border-radius: 6px;
+  background-color: #3d3d3d;
+  color: white;
+  outline: none;
+}
+
+.search-form input:focus {
+  border: 1px solid #61dafb;
+}
+
+.search-form button {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 6px;
+  background-color: #61dafb;
+  color: #1a1a1a;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.search-form button:hover {
+  background-color: #4fa8c7;
+}
+
+.weather-info {
+  text-align: center;
+}
+
+.weather-info h3 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.main-temp h1 {
+  font-size: 4rem;
+  margin-bottom: 0.5rem;
+}
+
+.description {
+  text-transform: capitalize;
+  color: #a0a0a0;
+  margin-bottom: 2rem;
+  font-size: 1.2rem;
+}
+
+.metrics {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  background-color: #242424;
+  padding: 1.5rem;
+  border-radius: 8px;
+}
+
+.metric {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: #e0e0e0;
+}
+
+.vs-badge {
+  background-color: #61dafb;
+  color: #1a1a1a;
+  font-weight: bold;
+  font-size: 1.5rem;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .comparison-container {
+    flex-direction: column;
+  }
+}
