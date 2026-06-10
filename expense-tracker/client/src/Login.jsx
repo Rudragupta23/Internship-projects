@@ -63,7 +63,7 @@ const Login = ({ setAuth }) => {
                             required
                         />
                     </div>
-                    <button type="submit" className="sign-in-btn">Secure Access</button>
+                    <button type="submit" className="sign-in-btn">Sign In</button>
                 </form>
             </div>
         </div>

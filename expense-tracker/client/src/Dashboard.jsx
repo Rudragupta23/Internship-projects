@@ -191,7 +191,7 @@ const Dashboard = ({ setAuth }) => {
         {/* KPI Row 1: Finances */}
         <div className="kpi-row">
             <div className="kpi-card">
-                <h4>Total Disbursed</h4>
+                <h4>Total Spent</h4>
                 <h2 className="text-cyan">{formatINR(total)}</h2>
             </div>
             
