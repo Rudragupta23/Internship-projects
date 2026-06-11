@@ -24,7 +24,7 @@ The Movie Search App is a web application that allows users to search for movies
 
 To run the app locally, follow these steps:
 
-1. Clone the repository: `git clone https://github.com/Rudragupta23/Movie-Search-App.git`
+1. Clone the repository: `https://github.com/Rudragupta23/Internship-projects/tree/main/Movie-Search.git`
 2. Navigate to the project directory: `cd Movie-Search-App`
 3. Install dependencies: `npm install`
 
