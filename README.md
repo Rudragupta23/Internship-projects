@@ -1,4 +1,4 @@
-# 🚀 Internship Projects
+# 🚀 Internship + Training Projects
 
 Welcome to my Internship Projects repository! This repository serves as a centralized workspace for all the full-stack projects and assignments I am developing during my internship.
 
